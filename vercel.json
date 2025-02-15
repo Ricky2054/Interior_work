@@ -1,0 +1,41 @@
+{
+    "version": 2,
+    "buildCommand": "next build",
+    "devCommand": "next dev",
+    "builds": [
+        {
+            "src": "next.config.js",
+            "use": "@vercel/next"
+        },
+        {
+            "src": "api/server_interior.py",
+            "use": "@vercel/python",
+            "config": {
+                "maxLambdaSize": "15mb",
+                "runtime": "python3.9"
+            }
+        },
+        {
+            "src": "api/text2image.py",
+            "use": "@vercel/python",
+            "config": {
+                "maxLambdaSize": "15mb",
+                "runtime": "python3.9"
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/server_interior(?:/(.*))?",
+            "dest": "api/server_interior.py"
+        },
+        {
+            "src": "/api/text2image(?:/(.*))?",
+            "dest": "api/text2image.py"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/"
+        }
+    ]
+}
